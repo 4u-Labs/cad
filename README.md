@@ -8,12 +8,13 @@
 ![AutoCAD Parity](https://img.shields.io/badge/AutoCAD-command_parity-red.svg?style=for-the-badge)
 ![DXF](https://img.shields.io/badge/format-DXF%20%7C%20DWG-orange.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-Proprietary%20%2F%20Free%20to%20Use-purple.svg?style=for-the-badge)
+[![AlternativeTo](https://img.shields.io/badge/AlternativeTo-CADClone-00a8ff.svg?style=for-the-badge&logo=alternativeto&logoColor=white)](https://alternativeto.net/software/cadclone/)
 
 <br>
 
 ### 📐 Software CAD 2D Profissional no Navegador com Precisão Milimétrica e Atalhos Nativos do AutoCAD
 
-[**🌐 Abrir CADClone Online**](https://4u.ia.br/app/cadclone/) • [**📚 Manual & Tutorial Completo (53 Recursos)**](https://4u.ia.br/app/cadclone/tutorial.php) • [**💬 Suporte & FAQ**](https://4u.ia.br/app/cadclone/suporte.php) • [**🏢 4U.IA.BR**](https://4u.ia.br)
+[**🌐 Abrir CADClone Online**](https://4u.ia.br/app/cadclone/) • [**🌟 Avaliar no AlternativeTo**](https://alternativeto.net/software/cadclone/) • [**📚 Manual & Tutorial Completo (53 Recursos)**](https://4u.ia.br/app/cadclone/tutorial.php) • [**💬 Suporte & FAQ**](https://4u.ia.br/app/cadclone/suporte.php) • [**🏢 4U.IA.BR**](https://4u.ia.br)
 
 </div>
 
