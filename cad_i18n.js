@@ -28,6 +28,12 @@ const CAD_I18N = {
         lang_switch_title: 'Mudar Idioma / Switch Language',
         btn_install_app: 'Instalar App',
         btn_install_title: 'Instalar CADClone no Computador ou Celular (PWA Offline)',
+        btn_donate: 'Apoie',
+        btn_donate_title: 'Apoie o CADClone via PayPal (Doação Voluntária)',
+        help_donate_title: '☕ Apoie o Desenvolvimento do CADClone',
+        help_donate_desc: 'O CADClone é 100% gratuito e independente. Se este app te ajuda ou economizou seu dia, considere fazer uma contribuição voluntária para mantermos o projeto ativo!',
+        btn_donate_now: 'Doar com PayPal',
+        btn_donate_help: 'Apoie o CADClone',
 
         // Ribbon Tabs
         tab_home: 'Início (Home)',
@@ -432,6 +438,12 @@ const CAD_I18N = {
         lang_switch_title: 'Switch Language / Mudar Idioma',
         btn_install_app: 'Install App',
         btn_install_title: 'Install CADClone on PC / Mobile (Offline PWA)',
+        btn_donate: 'Support',
+        btn_donate_title: 'Support CADClone via PayPal (Voluntary Donation)',
+        help_donate_title: '☕ Support CADClone Development',
+        help_donate_desc: 'CADClone is 100% free and independent. If this tool helps you or saved your day, consider making a voluntary donation to help keep the project running!',
+        btn_donate_now: 'Donate with PayPal',
+        btn_donate_help: 'Support CADClone',
 
         // Ribbon Tabs
         tab_home: 'Home',

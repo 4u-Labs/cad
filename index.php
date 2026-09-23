@@ -221,6 +221,38 @@
             display: none !important;
         }
 
+        /* Donate Button */
+        .btn-donate-cad {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(217, 119, 6, 0.3) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #fbbf24;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        .btn-donate-cad:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.5) 100%);
+            border-color: #fbbf24;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .btn-donate-cad svg {
+            color: inherit;
+        }
+
         /* Language Switcher (PT / EN) */
         .lang-switch-box {
             display: flex;
@@ -2448,6 +2480,16 @@
             </div>
 
             <div class="cad-titlebar-right">
+                <a href="https://www.paypal.com/ncp/payment/L7YRCS984T33N" target="_blank" rel="noopener noreferrer" class="btn-donate-cad" id="btnDonateCad" data-i18n-title="btn_donate_title" title="Apoie o CADClone via PayPal (Doação Voluntária)">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                    </svg>
+                    <span data-i18n="btn_donate">Apoie</span>
+                </a>
                 <button type="button" class="btn-install-pwa" id="btnInstallPwa" onclick="cadcloneUI.promptInstallPWA()" data-i18n-title="btn_install_title" title="Instalar CADClone no Computador ou Celular (PWA Offline)">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -3351,9 +3393,19 @@
                         <tr><td><span class="kbd-badge">REPEAT</span></td><td><span class="kbd-badge" data-i18n="help_key_space_enter">ESPAÇO / ENTER</span></td><td data-i18n="help_desc_repeat">Repete o último comando executado</td></tr>
                     </tbody>
                 </table>
+
+                <div style="margin-top: 14px; padding: 12px 14px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.28); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                    <div style="font-size: 11px; color: #fde68a; line-height: 1.45;">
+                        <strong style="color: #fbbf24; font-size: 12px;" data-i18n="help_donate_title">☕ Apoie o Desenvolvimento do CADClone</strong><br>
+                        <span data-i18n="help_donate_desc">O CADClone é 100% gratuito e independente. Se este app te ajuda ou economizou seu dia, considere fazer uma contribuição voluntária para mantermos o projeto ativo!</span>
+                    </div>
+                    <a href="https://www.paypal.com/ncp/payment/L7YRCS984T33N" target="_blank" rel="noopener noreferrer" class="btn-donate-cad" style="padding: 6px 14px; font-size: 11px; flex-shrink: 0;" data-i18n="btn_donate_now">Doar com PayPal</a>
+                </div>
             </div>
             <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex; gap: 12px; font-size: 11px;">
+                <div style="display: flex; gap: 10px; font-size: 11px; align-items: center;">
+                    <a href="https://www.paypal.com/ncp/payment/L7YRCS984T33N" target="_blank" rel="noopener noreferrer" style="color: #fbbf24; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;" data-i18n-title="btn_donate_title" title="Apoie o CADClone via PayPal">☕ <span data-i18n="btn_donate_help">Apoie o CADClone</span></a>
+                    <span style="color: rgba(255,255,255,0.2);">&bull;</span>
                     <a href="tutorial.php" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: none; font-weight: 600;" data-i18n="footer_tutorial">Tutorial &amp; Guia</a>
                     <span style="color: rgba(255,255,255,0.2);">&bull;</span>
                     <a href="suporte.php" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: none;" data-i18n="footer_support">Suporte &amp; FAQ</a>
