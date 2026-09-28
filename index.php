@@ -6121,6 +6121,36 @@
             }
 
             proceedNormalStartup() {
+                // ECALC Suite Bridge: Intercept incoming DXF
+                const extDxf = localStorage.getItem('cadclone_external_dxf');
+                const extFilename = localStorage.getItem('cadclone_external_filename') || 'detalhamento_ecalc.dxf';
+                if (extDxf) {
+                    localStorage.removeItem('cadclone_external_dxf');
+                    localStorage.removeItem('cadclone_external_filename');
+                    try {
+                        this.engine.clear();
+                        let loadedCount = 0;
+                        if (typeof this.engine.loadDxf === 'function') {
+                            loadedCount = this.engine.loadDxf(extDxf, true);
+                        } else if (typeof DxfIO !== 'undefined' && typeof DxfIO.importDXF === 'function') {
+                            DxfIO.importDXF(this.engine, extDxf);
+                            loadedCount = this.engine.entities.length;
+                        }
+                        this.dismissSampleBanner();
+                        const curDoc = this.getActiveDocument();
+                        if (curDoc) {
+                            curDoc.title = extFilename;
+                            curDoc.state.isDirty = false;
+                        }
+                        this.renderFileTabs();
+                        this.engine.zoomExtents();
+                        this.cmdSystem.logHistory(`[ECALC Suite] Projeto importado: ${extFilename}`);
+                        return;
+                    } catch (err) {
+                        console.error('Erro ao carregar DXF da Suite ECALC:', err);
+                    }
+                }
+
                 const setting = localStorage.getItem('cadclone_load_sample');
                 const shouldLoad = setting !== 'false'; // Default to true on first run
 
