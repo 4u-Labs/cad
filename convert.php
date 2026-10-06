@@ -1,6 +1,12 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
 
 $uploaded = $_FILES['cadfile'] ?? $_FILES['cad_file'] ?? null;
 
@@ -13,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $uploaded) {
         exit;
     }
     
+    // Direct DXF text upload
     if ($ext === 'dxf') {
         $content = file_get_contents($file['tmp_name']);
         echo json_encode([
@@ -25,39 +32,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $uploaded) {
         exit;
     }
     
+    // DWG conversion via dwg2dxf
     if ($ext === 'dwg') {
-        // Inspect DWG binary version header
-        $verName = 'AutoCAD DWG Nativo';
-        $header = 'UNKNOWN';
-        if (file_exists($file['tmp_name']) && is_readable($file['tmp_name'])) {
-            $handle = fopen($file['tmp_name'], 'rb');
-            if ($handle) {
-                $header = fread($handle, 6);
-                fclose($handle);
-                
-                $versions = [
-                    'AC1032' => 'AutoCAD 2018 / 2021 / 2024 / 2025',
-                    'AC1027' => 'AutoCAD 2013 / 2016 / 2017',
-                    'AC1024' => 'AutoCAD 2010 / 2011 / 2012',
-                    'AC1021' => 'AutoCAD 2007 / 2008 / 2009',
-                    'AC1018' => 'AutoCAD 2004 / 2005 / 2006',
-                    'AC1015' => 'AutoCAD 2000 / 2000i / 2002',
-                    'AC1014' => 'AutoCAD R14',
-                    'AC1012' => 'AutoCAD R13',
-                    'AC1009' => 'AutoCAD R11 / R12'
-                ];
-                $verName = $versions[$header] ?? ('AutoCAD DWG (Cabeçalho: ' . htmlspecialchars($header) . ')');
+        $tmpBase = sys_get_temp_dir() . '/dwg_' . uniqid();
+        $tmpIn = $tmpBase . '.dwg';
+        $tmpOut = $tmpBase . '.dxf';
+        
+        if (!move_uploaded_file($file['tmp_name'], $tmpIn)) {
+            copy($file['tmp_name'], $tmpIn);
+        }
+
+        // 1. Locate dwg2dxf on server
+        $dwg2dxfBin = null;
+        $possiblePaths = [
+            '/usr/local/bin/dwg2dxf',
+            '/usr/bin/dwg2dxf',
+            trim(shell_exec('which dwg2dxf 2>/dev/null') ?? '')
+        ];
+        foreach ($possiblePaths as $p) {
+            if ($p && file_exists($p) && is_executable($p)) {
+                $dwg2dxfBin = $p;
+                break;
             }
         }
-        
+
+        if ($dwg2dxfBin) {
+            // Execute dwg2dxf: dwg2dxf -y -o <out.dxf> <in.dwg>
+            $cmd = escapeshellcmd($dwg2dxfBin) . ' -y -o ' . escapeshellarg($tmpOut) . ' ' . escapeshellarg($tmpIn) . ' 2>&1';
+            $output = [];
+            $retCode = 0;
+            exec($cmd, $output, $retCode);
+
+            if (file_exists($tmpOut) && filesize($tmpOut) > 0) {
+                $dxfContent = file_get_contents($tmpOut);
+                @unlink($tmpIn);
+                @unlink($tmpOut);
+                echo json_encode([
+                    'success' => true,
+                    'type' => 'dwg_converted',
+                    'name' => $file['name'],
+                    'size' => strlen($dxfContent),
+                    'data' => $dxfContent,
+                    'message' => 'Arquivo DWG convertido para DXF com sucesso!'
+                ]);
+                exit;
+            }
+        }
+
+        // 2. Fallback: If not available locally (e.g. localhost dev), proxy to Oracle VPS
+        if (file_exists($tmpIn)) {
+            $ch = curl_init('https://4u.ia.br/app/cadclone/convert.php');
+            $cfile = new CURLFile($tmpIn, 'application/octet-stream', $file['name']);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ['cadfile' => $cfile]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            $vpsResponse = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            @unlink($tmpIn);
+            @unlink($tmpOut);
+
+            if ($httpCode === 200 && $vpsResponse) {
+                $decoded = json_decode($vpsResponse, true);
+                if ($decoded && !empty($decoded['success'])) {
+                    echo $vpsResponse;
+                    exit;
+                }
+            }
+        }
+
+        @unlink($tmpIn);
+        @unlink($tmpOut);
+
         echo json_encode([
-            'success' => true,
-            'type' => 'dwg',
-            'name' => $file['name'],
-            'size' => $file['size'],
-            'version' => $verName,
-            'header' => $header,
-            'message' => 'Arquivo DWG (' . $verName . ') verificado com sucesso.'
+            'success' => false,
+            'error' => 'Não foi possível converter o arquivo DWG. Verifique se o arquivo não está protegido por senha ou danificado.'
         ]);
         exit;
     }

@@ -5889,17 +5889,74 @@
                     };
                     reader.readAsText(file);
                 } else if (name.endsWith('.dwg')) {
-                    // DWG Binary Interceptor Modal: Suggest DXF conversion
-                    this.openDwgHelpModal(file.name);
+                    this.cmdSystem.logHistory(`Processando DWG: ${file.name}... Convertendo no servidor...`);
+                    try {
+                        const formData = new FormData();
+                        formData.append('cadfile', file);
+                        
+                        const res = await fetch('convert.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const result = await res.json();
+                        
+                        if (result.success && result.data) {
+                            if (this.engine.entities.length > 0 || this.engine.isDirty) {
+                                this.createDocument(file.name, null, true);
+                            } else {
+                                const curDoc = this.getActiveDocument();
+                                if (curDoc) curDoc.title = file.name;
+                            }
+                            
+                            let loadedCount = 0;
+                            if (typeof this.engine.loadDxf === 'function') {
+                                loadedCount = this.engine.loadDxf(result.data, true);
+                            } else if (typeof DxfIO !== 'undefined' && typeof DxfIO.importDXF === 'function') {
+                                this.engine.clear();
+                                const prevCount = this.engine.entities.length;
+                                DxfIO.importDXF(this.engine, result.data);
+                                loadedCount = this.engine.entities.length - prevCount;
+                            } else if (typeof DxfParser !== 'undefined') {
+                                const parser = new DxfParser();
+                                const dxf = parser.parseSync(result.data);
+                                if (dxf && dxf.entities && dxf.entities.length > 0) {
+                                    this.engine.loadEntitiesFromDxf(dxf, true);
+                                    loadedCount = this.engine.entities.length;
+                                }
+                            }
+                            
+                            if (this.engine.entities && this.engine.entities.length > 0) {
+                                const total = this.engine.entities.length;
+                                this.cmdSystem.logHistory(this.currentLang === 'en'
+                                    ? `DWG loaded successfully: ${total} entities.`
+                                    : `DWG importado com sucesso: ${total} entidades.`);
+                                this.updatePropertiesPanel();
+                                if (typeof this.updateLayerDropdown === 'function') {
+                                    this.updateLayerDropdown();
+                                }
+                                this.dismissSampleBanner();
+                                this.engine.isDirty = false;
+                                const curDoc = this.getActiveDocument();
+                                if (curDoc) curDoc.state.isDirty = false;
+                                this.renderFileTabs();
+                                this.updateAutoSaveIndicator('saved');
+                                if (typeof this.engine.zoomExtents === 'function') {
+                                    this.engine.zoomExtents();
+                                }
+                            } else {
+                                alert('O arquivo DWG foi processado, mas nenhuma entidade vetorial reconhecida foi encontrada.');
+                            }
+                        } else {
+                            const msg = result.error || 'Falha ao processar arquivo DWG.';
+                            this.cmdSystem.logHistory(`Erro DWG: ${msg}`);
+                            alert(`Não foi possível abrir o arquivo DWG:\n${msg}`);
+                        }
+                    } catch (err) {
+                        console.error('Erro ao converter DWG:', err);
+                        this.cmdSystem.logHistory('Erro ao processar DWG: ' + (err.message || err));
+                        alert('Falha na comunicação ao converter o arquivo DWG.');
+                    }
                 }
-            }
-
-            openDwgHelpModal(fileName = 'projeto.dwg') {
-                const nameEl = document.getElementById('dwgTargetFilename');
-                if (nameEl) nameEl.textContent = fileName;
-                const modal = document.getElementById('cadDwgModal');
-                if (modal) modal.classList.add('open');
-                this.cmdSystem.logHistory('Nota: Arquivos binários .DWG requerem conversão para formato aberto .DXF ou uso dos blocos internos.');
             }
 
             saveDXF() {
