@@ -182,6 +182,8 @@ class CADEngine {
     // Undo / Redo
     saveStateForUndo() {
         this.isDirty = true;
+        const count = this.entities ? this.entities.length : 0;
+        const maxStack = count > 5000 ? 10 : (count > 1500 ? 25 : 50);
         const snapshot = JSON.stringify({
             entities: this.entities,
             layers: this.layers,
@@ -189,18 +191,21 @@ class CADEngine {
             ltscale: this.ltscale || 1.0
         });
         this.undoStack.push(snapshot);
-        if (this.undoStack.length > 50) this.undoStack.shift();
+        while (this.undoStack.length > maxStack) this.undoStack.shift();
         this.redoStack = []; // clear redo on new action
     }
 
     undo() {
         if (this.undoStack.length === 0) return false;
+        const count = this.entities ? this.entities.length : 0;
+        const maxStack = count > 5000 ? 10 : (count > 1500 ? 25 : 50);
         this.redoStack.push(JSON.stringify({
             entities: this.entities,
             layers: this.layers,
             activeLayer: this.activeLayer,
             ltscale: this.ltscale || 1.0
         }));
+        while (this.redoStack.length > maxStack) this.redoStack.shift();
         const prev = JSON.parse(this.undoStack.pop());
         this.entities = prev.entities;
         this.layers = prev.layers;
@@ -213,12 +218,15 @@ class CADEngine {
 
     redo() {
         if (this.redoStack.length === 0) return false;
+        const count = this.entities ? this.entities.length : 0;
+        const maxStack = count > 5000 ? 10 : (count > 1500 ? 25 : 50);
         this.undoStack.push(JSON.stringify({
             entities: this.entities,
             layers: this.layers,
             activeLayer: this.activeLayer,
             ltscale: this.ltscale || 1.0
         }));
+        while (this.undoStack.length > maxStack) this.undoStack.shift();
         const nextState = JSON.parse(this.redoStack.pop());
         this.entities = nextState.entities;
         this.layers = nextState.layers;

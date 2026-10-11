@@ -80,15 +80,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $uploaded) {
         }
 
         // 2. Fallback: If not available locally (e.g. localhost dev), proxy to Oracle VPS
-        if (file_exists($tmpIn)) {
+        $isProduction = in_array($_SERVER['HTTP_HOST'] ?? '', ['4u.ia.br', 'www.4u.ia.br', 'www1.4u.ia.br'])
+            || in_array($_SERVER['SERVER_ADDR'] ?? '', ['137.131.249.105'])
+            || isset($_SERVER['HTTP_X_CADCLONE_PROXY']);
+
+        if (!$isProduction && file_exists($tmpIn)) {
             $ch = curl_init('https://4u.ia.br/app/cadclone/convert.php');
             $cfile = new CURLFile($tmpIn, 'application/octet-stream', $file['name']);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, ['cadfile' => $cfile]);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Cadclone-Proxy: 1']);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
             $vpsResponse = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);

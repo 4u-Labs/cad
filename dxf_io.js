@@ -82,7 +82,19 @@ const DxfIO = {
         add(9, '$ACADVER');
         add(1, 'AC1009'); // AutoCAD R12 (most universally accepted)
         add(9, '$INSUNITS');
-        add(70, 6); // Meters (Civil Engineering standard)
+        let insunits = 6; // Default: Meters (Civil Engineering standard)
+        if (cadOrEntities && cadOrEntities.units) {
+            const u = String(cadOrEntities.units).toLowerCase();
+            if (u === 'mm' || u === 'millimeter' || u === 'millimeters') insunits = 4;
+            else if (u === 'cm' || u === 'centimeter' || u === 'centimeters') insunits = 5;
+            else if (u === 'm' || u === 'meter' || u === 'meters') insunits = 6;
+            else if (u === 'in' || u === 'inch' || u === 'inches') insunits = 1;
+            else if (u === 'ft' || u === 'feet' || u === 'foot') insunits = 2;
+            else if (!isNaN(parseInt(cadOrEntities.units))) insunits = parseInt(cadOrEntities.units);
+        } else if (cadOrEntities && typeof cadOrEntities.insunits === 'number') {
+            insunits = cadOrEntities.insunits;
+        }
+        add(70, insunits);
         add(9, '$LTSCALE');
         add(40, ((cadOrEntities && cadOrEntities.ltscale) || 1.0).toFixed(4));
         add(0, 'ENDSEC');

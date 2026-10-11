@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cadclone-v1.6.1';
+const CACHE_NAME = 'cadclone-v1.6.2';
 const ASSETS = [
   './',
   './index.php',
@@ -34,7 +34,7 @@ const ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS).catch(() => {}))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)).catch(() => {})
   );
   self.skipWaiting();
 });
@@ -42,7 +42,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((k) => (k !== CACHE_NAME ? caches.delete(k) : null)))
+      Promise.all(keys.map((k) => (k.startsWith('cadclone-') && k !== CACHE_NAME ? caches.delete(k) : null)))
     )
   );
   self.clients.claim();

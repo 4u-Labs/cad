@@ -6034,7 +6034,12 @@
                     return;
                 }
                 if (!this.engine.entities || this.engine.entities.length === 0) {
-                    this.updateAutoSaveIndicator('idle');
+                    try {
+                        localStorage.removeItem('cadclone_autosave');
+                        this.engine.lastAutoSaveTime = Date.now();
+                        this.engine.isDirty = false;
+                        this.updateAutoSaveIndicator('saved');
+                    } catch(e) {}
                     return;
                 }
 
@@ -6048,6 +6053,11 @@
                     }
                 } catch (err) {
                     console.warn('AutoSave error:', err);
+                    this.updateAutoSaveIndicator('error');
+                    if (this.cmdSystem && typeof this.cmdSystem.logHistory === 'function') {
+                        const isEn = this.currentLang === 'en';
+                        this.cmdSystem.logHistory(isEn ? 'Warning: Local storage quota exceeded for AutoSave. Please export manually (.DXF).' : 'Aviso: Cota do navegador excedida no AutoSave. Salve o desenho manualmente (.DXF).');
+                    }
                 }
             }
 
@@ -6056,6 +6066,14 @@
                 const text = document.getElementById('statusAutoSaveText');
                 const dot = document.getElementById('autoSaveDot');
                 if (!badge || !text || !dot || !this.engine) return;
+
+                if (status === 'error') {
+                    dot.classList.remove('saving');
+                    dot.style.background = '#ef4444';
+                    text.textContent = (this.currentLang === 'en' ? 'AutoSave Failed' : 'Falha AutoSave');
+                    return;
+                }
+                dot.style.background = '';
 
                 // Keep active tab dirty flag and titlebar in sync
                 const curDoc = this.getActiveDocument();
@@ -6182,17 +6200,19 @@
                 const extDxf = localStorage.getItem('cadclone_external_dxf');
                 const extFilename = localStorage.getItem('cadclone_external_filename') || 'detalhamento_ecalc.dxf';
                 if (extDxf) {
-                    localStorage.removeItem('cadclone_external_dxf');
-                    localStorage.removeItem('cadclone_external_filename');
                     try {
-                        this.engine.clear();
                         let loadedCount = 0;
                         if (typeof this.engine.loadDxf === 'function') {
+                            this.engine.clear();
                             loadedCount = this.engine.loadDxf(extDxf, true);
                         } else if (typeof DxfIO !== 'undefined' && typeof DxfIO.importDXF === 'function') {
+                            this.engine.clear();
                             DxfIO.importDXF(this.engine, extDxf);
                             loadedCount = this.engine.entities.length;
                         }
+                        // Only remove from localStorage after confirmed success
+                        localStorage.removeItem('cadclone_external_dxf');
+                        localStorage.removeItem('cadclone_external_filename');
                         this.dismissSampleBanner();
                         const curDoc = this.getActiveDocument();
                         if (curDoc) {
@@ -6201,10 +6221,13 @@
                         }
                         this.renderFileTabs();
                         this.engine.zoomExtents();
-                        this.cmdSystem.logHistory(`[ECALC Suite] Projeto importado: ${extFilename}`);
+                        this.cmdSystem.logHistory(`[ECALC Suite] Projeto importado com sucesso: ${extFilename}`);
                         return;
                     } catch (err) {
                         console.error('Erro ao carregar DXF da Suite ECALC:', err);
+                        if (this.cmdSystem) {
+                            this.cmdSystem.logHistory(`[ECALC Suite] Falha ao importar ${extFilename}: formato corrompido ou incompatível.`);
+                        }
                     }
                 }
 
