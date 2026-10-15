@@ -76,7 +76,13 @@ Você não precisa compilar ou instalar dependências para usar o CADClone:
 
 ---
 
-## 📄 Licença & Direitos / License
+## 📄 Licença & Termos de Uso / License
 
-© 2026 **4U.IA.BR**. Todos os direitos reservados.  
-Desenvolvido por **4U-Labs** para democratizar o acesso ao desenho técnico profissional em qualquer dispositivo.
+Este projeto é distribuído sob o modelo **Source-Available** (código disponível publicamente para consulta, aprendizado e auditoria técnica).
+
+* ✅ **Permitido:** Estudo pessoal, aprendizado, testes locais e auditoria de código.
+* ❌ **Proibido:** Uso comercial (direto ou indireto), redistribuição, revenda ou criação de produtos derivados sem autorização prévia por escrito.
+
+Todos os direitos autorais e patrimoniais pertencem à **4U** (4u.ia.br). Para detalhes completos e condições legais, consulte o arquivo [LICENSE](LICENSE).
+
+Para parcerias ou licenciamento de uso comercial do motor do CADClone, entre em contato através de [4u.ia.br](https://4u.ia.br).
