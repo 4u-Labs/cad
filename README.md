@@ -2,11 +2,12 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.6.1-blue.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-active-success.svg?style=for-the-badge)
 ![PWA](https://img.shields.io/badge/PWA-offline_ready-10b981.svg?style=for-the-badge)
 ![AutoCAD Parity](https://img.shields.io/badge/AutoCAD-command_parity-red.svg?style=for-the-badge)
-![DXF](https://img.shields.io/badge/format-DXF%20%7C%20DWG-orange.svg?style=for-the-badge)
+![DWG & DXF](https://img.shields.io/badge/format-DWG%20%7C%20DXF%20(WASM)-orange.svg?style=for-the-badge)
+![Rust WASM](https://img.shields.io/badge/Rust-WebAssembly-black.svg?style=for-the-badge&logo=rust)
 ![License](https://img.shields.io/badge/license-Proprietary%20%2F%20Free%20to%20Use-purple.svg?style=for-the-badge)
 [![AlternativeTo](https://img.shields.io/badge/AlternativeTo-CADClone-00a8ff.svg?style=for-the-badge&logo=alternativeto&logoColor=white)](https://alternativeto.net/software/cadclone/about/)
 
@@ -52,7 +53,7 @@ Projetado para arquitetos, engenheiros civis, projetistas, estudantes e técnico
 | **Blocos ABNT** | Galeria com 14 categorias técnicas, busca instantânea, rotação e escala na inserção (`INSERT` / `I`) |
 | **Calco Técnico** | Anexar PDF (`PDFATTACH`), Anexar Imagem (`IMAGEATTACH`), Calibração Métrica 1:1 (`CALIBRATE`), Barra Flutuante com rotação 90°, zoom e opacidade |
 | **Inspeção Rápida** | Painel de Propriedades (<kbd>Ctrl+1</kbd> / `PROPS`), Alças de manipulação de vértices (Direct Grips) |
-| **Formatos & Arquivos**| Salvar DXF Nativo (`QSAVE` / <kbd>Ctrl+S</kbd>), Plotar PDF Vetorial em Escala A4-A1 (`PLOT`), Exportar PNG/JPEG (`EXPORT`), AutoSave contínuo com recuperação (`RECOVER`) |
+| **Formatos & Arquivos**| Salvar DWG Nativo Autodesk via WebAssembly (`QSAVE` / `DWGSAVE` / <kbd>Ctrl+S</kbd>), Salvar DXF ASCII (`DXFSAVE`), Plotar PDF Vetorial em Escala A4-A1 (`PLOT`), Exportar PNG/JPEG (`EXPORT`), AutoSave contínuo com recuperação (`RECOVER`) |
 | **PWA & Offline** | Instalação com 1 clique como App Desktop/Mobile, suporte total offline via Service Worker |
 
 ---
@@ -60,6 +61,7 @@ Projetado para arquitetos, engenheiros civis, projetistas, estudantes e técnico
 ## 💻 Arquitetura Técnica / Tech Stack
 
 * **Motor Gráfico:** HTML5 Canvas 2D de alta performance, sem dependências de frameworks pesados, renderizando centenas de entidades com subpixel precision a 60 FPS.
+* **Motor Nativo DWG/DXF (WebAssembly / Rust):** Módulo WASM compilado em Rust com base no `acadrust` (`crates/cadclone-dwg`), permitindo leitura e geração nativa de binários Autodesk DWG (R13 a 2018) diretamente no navegador, 100% offline e sem necessidade de servidor externo.
 * **Interpretador de Comandos:** Sistema próprio de emulação de console AutoCAD (`command_system.js`), suporte a apelidos, entrada coordenada relativa (`@`) e polar (`<`).
 * **Interoperabilidade DXF:** Parser e gerador DXF nativo (`dxf_io.js`), garantindo compatibilidade com AutoCAD, LibreCAD, QCad, Revit e SketchUp.
 * **Manipulação de PDF:** Integração nativa com `pdf.js` para renderização vetorial de calcos e `jspdf` para geração de pranchas técnicas normalizadas em escala.

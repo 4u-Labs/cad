@@ -86,6 +86,10 @@ class CommandSystem {
             'JPEG': 'JPG',
             'SAVE': 'QSAVE',
             'QSAVE': 'QSAVE',
+            'DWGSAVE': 'DWGSAVE',
+            'SAVEDWG': 'DWGSAVE',
+            'DXFSAVE': 'DXFSAVE',
+            'SAVEDXF': 'DXFSAVE',
             'AUTOSAVE': 'AUTOSAVE',
             'RECOVER': 'RECOVER',
             'DRAWINGRECOVERY': 'RECOVER',
@@ -180,7 +184,9 @@ class CommandSystem {
             { alias: 'EXPORT', name: 'EXPORT', desc: 'Exporta imagem em alta resolução com fundo sólido (PNG/JPG)', descEn: 'Exports high-resolution framed drawing image (PNG/JPG)' },
             { alias: 'PNG', name: 'PNG', desc: 'Exporta imagem PNG em alta resolução com fundo sólido', descEn: 'Exports high-resolution solid background PNG image' },
             { alias: 'JPG', name: 'JPG', desc: 'Exporta imagem JPEG do projeto com enquadramento automático', descEn: 'Exports project JPEG image' },
-            { alias: 'QSAVE', name: 'QSAVE', desc: 'Salva o projeto em arquivo DXF nativo', descEn: 'Quickly saves the current drawing as DXF' },
+            { alias: 'QSAVE', name: 'QSAVE', desc: 'Salva o projeto em arquivo DWG nativo Autodesk via WebAssembly (Ctrl+S)', descEn: 'Quickly saves drawing as native Autodesk DWG via WebAssembly (Ctrl+S)' },
+            { alias: 'DWGSAVE', name: 'DWGSAVE', desc: 'Salva o projeto em arquivo DWG nativo Autodesk (AutoCAD 2018)', descEn: 'Saves project as native Autodesk DWG file (AutoCAD 2018)' },
+            { alias: 'DXFSAVE', name: 'DXFSAVE', desc: 'Exporta o projeto em arquivo DXF ASCII universal', descEn: 'Exports project as universal ASCII DXF file' },
             { alias: 'AUTOSAVE', name: 'AUTOSAVE', desc: 'Salva imediatamente o desenho no cache de segurança', descEn: 'Immediately saves drawing snapshot to local cache' },
             { alias: 'RECOVER', name: 'RECOVER', desc: 'AutoCAD Drawing Recovery: restaura projeto do AutoSave', descEn: 'Drawing Recovery: restores drawing from AutoSave cache' },
             { alias: 'OPEN', name: 'OPEN', desc: 'Abre desenhos técnicos em formato DXF ou DWG', descEn: 'Opens an existing DXF or DWG drawing file' },
@@ -1781,6 +1787,28 @@ class CommandSystem {
             'QSAVE': {
                 name: 'QSAVE',
                 start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.saveDWG) {
+                        window.cadcloneUI.saveDWG();
+                    } else if (window.cadcloneUI && window.cadcloneUI.saveDXF) {
+                        window.cadcloneUI.saveDXF();
+                    }
+                    this.cancel();
+                }
+            },
+
+            'DWGSAVE': {
+                name: 'DWGSAVE',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.saveDWG) {
+                        window.cadcloneUI.saveDWG();
+                    }
+                    this.cancel();
+                }
+            },
+
+            'DXFSAVE': {
+                name: 'DXFSAVE',
+                start: () => {
                     if (window.cadcloneUI && window.cadcloneUI.saveDXF) {
                         window.cadcloneUI.saveDXF();
                     }
@@ -2274,6 +2302,26 @@ class CommandSystem {
 
     initEventListeners() {
         window.addEventListener('keydown', (e) => {
+            // Ctrl+S / Cmd+S: Quick Save DWG (AutoCAD Standard)
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                if (window.cadcloneUI && window.cadcloneUI.saveDWG) {
+                    window.cadcloneUI.saveDWG();
+                } else if (window.cadcloneUI && window.cadcloneUI.saveDXF) {
+                    window.cadcloneUI.saveDXF();
+                }
+                return;
+            }
+
+            // Ctrl+O / Cmd+O: Open Drawing (AutoCAD Standard)
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'o') {
+                e.preventDefault();
+                if (window.cadcloneUI && window.cadcloneUI.openFileDialog) {
+                    window.cadcloneUI.openFileDialog();
+                }
+                return;
+            }
+
             // Ctrl+1: Properties Inspector (works even if focused)
             if ((e.ctrlKey || e.metaKey) && e.key === '1') {
                 e.preventDefault();

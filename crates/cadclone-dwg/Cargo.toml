@@ -1,0 +1,17 @@
+[package]
+name = "cadclone_dwg"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+acadrust = { version = "0.6", default-features = false }
+wasm-bindgen = "0.2.100"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

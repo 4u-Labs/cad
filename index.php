@@ -2457,8 +2457,11 @@
                     <button class="qa-btn" data-i18n-title="qa_open" title="Abrir Arquivo DXF/DWG (Ctrl+O)" onclick="cadcloneUI.openFileDialog()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                     </button>
-                    <button class="qa-btn" data-i18n-title="qa_save" title="Salvar DXF (Ctrl+S / QSAVE)" onclick="cadcloneUI.saveDXF()">
+                    <button class="qa-btn" data-i18n-title="qa_save" title="Salvar DWG (Ctrl+S / QSAVE)" onclick="cadcloneUI.saveDWG()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    </button>
+                    <button class="qa-btn" data-i18n-title="qa_save_dxf" title="Salvar DXF (DXFSAVE)" onclick="cadcloneUI.saveDXF()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     </button>
                     <button class="qa-btn" data-i18n-title="qa_undo" title="Desfazer (Ctrl+Z / U)" onclick="cadcloneUI.undo()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
@@ -2848,8 +2851,12 @@
                             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                             <span data-i18n="tool_sample_model">Planta Modelo</span>
                         </button>
-                        <button class="tool-btn-large" data-i18n-title="tool_save_dxf_title" title="Salvar Arquivo DXF (QSAVE)" onclick="cadcloneUI.saveDXF()">
+                        <button class="tool-btn-large" data-i18n-title="tool_save_dwg_title" title="Salvar Arquivo DWG Nativo Autodesk (QSAVE)" onclick="cadcloneUI.saveDWG()">
                             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            <span data-i18n="tool_save_dwg">Salvar DWG</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_save_dxf_title" title="Salvar Arquivo DXF ASCII (DXFSAVE)" onclick="cadcloneUI.saveDXF()">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                             <span data-i18n="tool_save_dxf">Salvar DXF</span>
                         </button>
                         <button class="tool-btn-large" data-i18n-title="tool_open_cad_title" title="Abrir Arquivo DXF / DWG" onclick="cadcloneUI.openFileDialog()">
@@ -3706,14 +3713,15 @@
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'libs/pdf.worker.min.js';
         }
     </script>
-    <script src="cad_i18n.js?v=1.6.1"></script>
-    <script src="dxf_io.js?v=1.6.1"></script>
-    <script src="osnap.js?v=1.6.1"></script>
-    <script src="cad_blocks.js?v=1.6.1"></script>
-    <script src="cad_engine.js?v=1.6.1"></script>
-    <script src="command_system.js?v=1.6.1"></script>
-    <script src="cad_underlay.js?v=1.6.1"></script>
-    <script src="pdf_export.js?v=1.6.1"></script>
+    <script src="cad_dwg.js?v=2.0.0"></script>
+    <script src="cad_i18n.js?v=2.0.0"></script>
+    <script src="dxf_io.js?v=2.0.0"></script>
+    <script src="osnap.js?v=2.0.0"></script>
+    <script src="cad_blocks.js?v=2.0.0"></script>
+    <script src="cad_engine.js?v=2.0.0"></script>
+    <script src="command_system.js?v=2.0.0"></script>
+    <script src="cad_underlay.js?v=2.0.0"></script>
+    <script src="pdf_export.js?v=2.0.0"></script>
 
     <!-- Main CAD UI Controller -->
     <script>
@@ -4359,8 +4367,12 @@
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                         <span data-i18n="tab_rename">${this.t('tab_rename')}</span>
                     </div>
-                    <div class="ctx-item" onclick="cadcloneUI.switchDocument('${docId}'); cadcloneUI.saveDXF(); cadcloneUI.hideContextMenu();">
+                    <div class="ctx-item" onclick="cadcloneUI.switchDocument('${docId}'); cadcloneUI.saveDWG(); cadcloneUI.hideContextMenu();">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        <span data-i18n="tab_save_dwg">${this.t('tab_save_dwg') || 'Salvar DWG'}</span>
+                    </div>
+                    <div class="ctx-item" onclick="cadcloneUI.switchDocument('${docId}'); cadcloneUI.saveDXF(); cadcloneUI.hideContextMenu();">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                         <span data-i18n="tab_save_dxf">${this.t('tab_save_dxf')}</span>
                     </div>
                     <div class="ctx-divider"></div>
@@ -5889,18 +5901,47 @@
                     };
                     reader.readAsText(file);
                 } else if (name.endsWith('.dwg')) {
-                    this.cmdSystem.logHistory(`Processando DWG: ${file.name}... Convertendo no servidor...`);
+                    this.cmdSystem.logHistory(this.currentLang === 'en'
+                        ? `Processing DWG: ${file.name}...`
+                        : `Processando DWG: ${file.name}...`);
                     try {
-                        const formData = new FormData();
-                        formData.append('cadfile', file);
+                        let dxfData = null;
+
+                        // 1. Try Native WebAssembly Engine (offline, instant client-side)
+                        if (typeof CadDwg !== 'undefined') {
+                            try {
+                                this.cmdSystem.logHistory(this.currentLang === 'en'
+                                    ? `Decoding DWG via WebAssembly Engine...`
+                                    : `Decodificando DWG via WebAssembly nativo...`);
+                                const arrayBuffer = await file.arrayBuffer();
+                                dxfData = await CadDwg.convertDwgToDxf(arrayBuffer);
+                            } catch (wasmErr) {
+                                console.warn('WASM DWG parser notice:', wasmErr);
+                                this.cmdSystem.logHistory((this.currentLang === 'en' ? 'WASM DWG notice: ' : 'Aviso motor WASM DWG: ') + (wasmErr.message || wasmErr));
+                            }
+                        }
+
+                        // 2. Server fallback if WASM didn't decode or isn't available
+                        if (!dxfData) {
+                            this.cmdSystem.logHistory(this.currentLang === 'en'
+                                ? `Attempting server-side fallback conversion...`
+                                : `Tentando conversão alternativa no servidor...`);
+                            const formData = new FormData();
+                            formData.append('cadfile', file);
+                            
+                            const res = await fetch('convert.php', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const result = await res.json();
+                            if (result.success && result.data) {
+                                dxfData = result.data;
+                            } else {
+                                throw new Error(result.error || 'Falha ao processar arquivo DWG.');
+                            }
+                        }
                         
-                        const res = await fetch('convert.php', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const result = await res.json();
-                        
-                        if (result.success && result.data) {
+                        if (dxfData) {
                             if (this.engine.entities.length > 0 || this.engine.isDirty) {
                                 this.createDocument(file.name, null, true);
                             } else {
@@ -5910,15 +5951,15 @@
                             
                             let loadedCount = 0;
                             if (typeof this.engine.loadDxf === 'function') {
-                                loadedCount = this.engine.loadDxf(result.data, true);
+                                loadedCount = this.engine.loadDxf(dxfData, true);
                             } else if (typeof DxfIO !== 'undefined' && typeof DxfIO.importDXF === 'function') {
                                 this.engine.clear();
                                 const prevCount = this.engine.entities.length;
-                                DxfIO.importDXF(this.engine, result.data);
+                                DxfIO.importDXF(this.engine, dxfData);
                                 loadedCount = this.engine.entities.length - prevCount;
                             } else if (typeof DxfParser !== 'undefined') {
                                 const parser = new DxfParser();
-                                const dxf = parser.parseSync(result.data);
+                                const dxf = parser.parseSync(dxfData);
                                 if (dxf && dxf.entities && dxf.entities.length > 0) {
                                     this.engine.loadEntitiesFromDxf(dxf, true);
                                     loadedCount = this.engine.entities.length;
@@ -5944,18 +5985,70 @@
                                     this.engine.zoomExtents();
                                 }
                             } else {
-                                alert('O arquivo DWG foi processado, mas nenhuma entidade vetorial reconhecida foi encontrada.');
+                                alert(this.currentLang === 'en'
+                                    ? 'The DWG file was read, but no supported vector entities were found.'
+                                    : 'O arquivo DWG foi processado, mas nenhuma entidade vetorial reconhecida foi encontrada.');
                             }
                         } else {
-                            const msg = result.error || 'Falha ao processar arquivo DWG.';
+                            const msg = 'Falha ao processar arquivo DWG.';
                             this.cmdSystem.logHistory(`Erro DWG: ${msg}`);
                             alert(`Não foi possível abrir o arquivo DWG:\n${msg}`);
                         }
                     } catch (err) {
                         console.error('Erro ao converter DWG:', err);
                         this.cmdSystem.logHistory('Erro ao processar DWG: ' + (err.message || err));
-                        alert('Falha na comunicação ao converter o arquivo DWG.');
+                        alert((this.currentLang === 'en' ? 'Could not open DWG file:\n' : 'Não foi possível abrir o arquivo DWG:\n') + (err.message || err));
                     }
+                }
+            }
+
+            saveDWG(version = '2018') {
+                this.exportDWG(version);
+            }
+
+            async exportDWG(version = '2018') {
+                try {
+                    const dxfString = (typeof DxfIO !== 'undefined' && typeof DxfIO.export === 'function')
+                        ? DxfIO.export(this.engine)
+                        : (typeof DxfIO !== 'undefined' && typeof DxfIO.exportDXF === 'function' ? DxfIO.exportDXF(this.engine) : '');
+                    if (!dxfString || !dxfString.trim()) {
+                        alert(this.currentLang === 'en' ? 'Drawing is empty. Nothing to save.' : 'O desenho está vazio. Nada para salvar.');
+                        return;
+                    }
+
+                    this.cmdSystem.logHistory(this.currentLang === 'en'
+                        ? `Generating Autodesk DWG (${version}) via WebAssembly...`
+                        : `Gerando arquivo binário Autodesk DWG (${version}) via WebAssembly...`);
+
+                    const dwgBytes = await CadDwg.convertDxfToDwg(dxfString, version);
+                    const activeDoc = this.getActiveDocument();
+                    let downloadName = 'projeto_cadclone.dwg';
+                    if (activeDoc && activeDoc.title) {
+                        downloadName = activeDoc.title.replace(/\.(dxf|dwg)$/i, '') + '.dwg';
+                    }
+
+                    const blob = new Blob([dwgBytes], { type: 'application/acad' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = downloadName;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+
+                    this.engine.isDirty = false;
+                    if (activeDoc) activeDoc.state.isDirty = false;
+                    this.renderFileTabs();
+                    this.updateAutoSaveIndicator('saved');
+
+                    this.cmdSystem.logHistory(this.currentLang === 'en'
+                        ? `DWG saved successfully: ${downloadName} (${(dwgBytes.length / 1024).toFixed(1)} KB)`
+                        : `Arquivo DWG salvo com sucesso: ${downloadName} (${(dwgBytes.length / 1024).toFixed(1)} KB)`);
+                } catch (err) {
+                    console.error('Erro ao salvar DWG:', err);
+                    alert((this.currentLang === 'en' ? 'Failed to save DWG: ' : 'Erro ao salvar DWG: ') + (err.message || err));
+                    this.cmdSystem.logHistory('Erro DWG: ' + (err.message || err));
                 }
             }
 
@@ -5974,7 +6067,7 @@
                 const activeDoc = this.getActiveDocument();
                 let downloadName = 'projeto_cadclone.dxf';
                 if (activeDoc && activeDoc.title) {
-                    downloadName = activeDoc.title.replace(/\.dwg$/i, '') + '.dxf';
+                    downloadName = activeDoc.title.replace(/\.(dxf|dwg)$/i, '') + '.dxf';
                 }
 
                 const blob = new Blob([dxfString], { type: 'application/dxf' });
@@ -6362,7 +6455,7 @@
         // PWA Service Worker Registration & Cache Auto-Update
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=1.6.1').then(reg => {
+                navigator.serviceWorker.register('sw.js?v=2.0.0').then(reg => {
                     reg.update();
                 }).catch(err => {
                     console.warn('SW registration failed:', err);

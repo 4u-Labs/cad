@@ -1833,22 +1833,22 @@ $v = time();
                 <span class="section-count">5 <span data-lang="pt">recursos</span><span data-lang="en">tools</span></span>
             </div>
             <div class="feature-cards-grid">
-                <!-- Salvar DXF -->
-                <div class="feature-card" data-keywords="salvar dxf exportar autocad revit qsave ctrl s">
+                <!-- Salvar DWG & DXF -->
+                <div class="feature-card" data-keywords="salvar dwg dxf exportar autocad revit qsave dwgsave dxfsave ctrl s">
                     <div class="card-top">
                         <div class="card-title-group">
                             <div class="card-icon"><i class="fa-solid fa-floppy-disk"></i></div>
-                            <div class="card-name"><span data-lang="pt">Salvar DXF Nativo (QSAVE)</span><span data-lang="en">Save Native DXF (QSAVE)</span></div>
+                            <div class="card-name"><span data-lang="pt">Salvar DWG & DXF Nativo (QSAVE)</span><span data-lang="en">Save Native DWG & DXF (QSAVE)</span></div>
                         </div>
-                        <div class="cmd-badges"><kbd>Ctrl+S</kbd> <kbd>QSAVE</kbd></div>
+                        <div class="cmd-badges"><kbd>Ctrl+S</kbd> <kbd>QSAVE</kbd> <kbd>DWGSAVE</kbd> <kbd>DXFSAVE</kbd></div>
                     </div>
                     <p class="card-desc">
-                        <span data-lang="pt">Gera arquivo DXF universal padrão da indústria CAD, 100% compatível com AutoCAD, Revit, SketchUp, Blender e máquinas CNC.</span>
-                        <span data-lang="en">Saves standard DXF CAD exchange file, 100% compatible with AutoCAD, Revit, SketchUp and CNC cutting tools.</span>
+                        <span data-lang="pt">Gera binário nativo Autodesk DWG (AutoCAD 2018) diretamente no navegador via WebAssembly (Rust), além de exportação DXF universal, 100% compatível com AutoCAD, Civil 3D, Revit, SketchUp e máquinas CNC.</span>
+                        <span data-lang="en">Generates native Autodesk DWG binary (AutoCAD 2018) client-side via Rust WebAssembly, alongside universal DXF export, 100% compatible with AutoCAD, Civil 3D, Revit, SketchUp and CNC cutting tools.</span>
                     </p>
                     <div class="steps-box">
                         <ol class="steps-list">
-                            <li><span data-lang="pt">Pressione <kbd>Ctrl</kbd> + <kbd>S</kbd> ou clique em Salvar DXF no menu superior.</span><span data-lang="en">Press <kbd>Ctrl</kbd> + <kbd>S</kbd> or click Save DXF in top bar.</span></li>
+                            <li><span data-lang="pt">Pressione <kbd>Ctrl</kbd> + <kbd>S</kbd> ou clique em Salvar DWG no menu rápido superior. Para DXF, use o botão Salvar DXF ou o comando <code>DXFSAVE</code>.</span><span data-lang="en">Press <kbd>Ctrl</kbd> + <kbd>S</kbd> or click Save DWG in top bar. For DXF, use the Save DXF button or type <code>DXFSAVE</code>.</span></li>
                         </ol>
                     </div>
                 </div>
@@ -1984,7 +1984,9 @@ $v = time();
                         <tr><td><code>CALIBRATE</code></td><td><code>CALIBRATE</code></td><td><span data-lang="pt">Calibra a escala métrica real 1:1 do calco PDF por 2 pontos</span><span data-lang="en">Calibrates 1:1 real-world metric scale of PDF by 2 points</span></td></tr>
                         <tr><td><code>ZOOM EXTENTS</code></td><td><kbd>Z E</kbd> / <kbd>Scroll 2x</kbd></td><td><span data-lang="pt">Enquadra todo o modelo no centro da tela</span><span data-lang="en">Fits all drawing elements into viewport bounds</span></td></tr>
                         <tr><td><code>REGEN</code></td><td><kbd>RE</kbd></td><td><span data-lang="pt">Regenera e redesenha a área gráfica do modelo</span><span data-lang="en">Regenerates and redraws canvas display model</span></td></tr>
-                        <tr><td><code>QSAVE</code></td><td><kbd>Ctrl+S</kbd></td><td><span data-lang="pt">Salva o projeto em arquivo DXF nativo no seu computador</span><span data-lang="en">Saves project as standard DXF CAD file</span></td></tr>
+                        <tr><td><code>QSAVE</code></td><td><kbd>Ctrl+S</kbd></td><td><span data-lang="pt">Salva o projeto em arquivo binário Autodesk DWG nativo via WebAssembly</span><span data-lang="en">Saves project as native Autodesk DWG binary file via WebAssembly</span></td></tr>
+                        <tr><td><code>DWGSAVE</code></td><td><code>DWGSAVE</code></td><td><span data-lang="pt">Salva o projeto em arquivo DWG nativo Autodesk (AutoCAD 2018)</span><span data-lang="en">Saves project as native Autodesk DWG file (AutoCAD 2018)</span></td></tr>
+                        <tr><td><code>DXFSAVE</code></td><td><code>DXFSAVE</code></td><td><span data-lang="pt">Exporta o projeto em arquivo DXF ASCII universal</span><span data-lang="en">Exports project as universal ASCII DXF file</span></td></tr>
                         <tr><td><code>PLOT</code></td><td><kbd>PLOT</kbd> / <kbd>PRINT</kbd></td><td><span data-lang="pt">Exporta pranchas PDF vetoriais normalizadas A4/A3/A2/A1</span><span data-lang="en">Exports standardized vector PDF drawing sheets</span></td></tr>
                         <tr><td><code>UNDO</code></td><td><kbd>Ctrl+Z</kbd> / <kbd>U</kbd></td><td><span data-lang="pt">Desfaz a última ação executada</span><span data-lang="en">Undoes the last action</span></td></tr>
                         <tr><td><code>REDO</code></td><td><kbd>Ctrl+Y</kbd></td><td><span data-lang="pt">Refaz a ação desfeita</span><span data-lang="en">Redoes previously undone action</span></td></tr>

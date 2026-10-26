@@ -731,10 +731,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="faq-answer">
                         <div data-lang="pt">
-                            Para abrir arquivos, clique no botão <strong>Abrir</strong> na barra rápida superior ou use o atalho <code>Ctrl + O</code>. Você pode carregar plantas em formato <strong>DXF</strong> ou <strong>DWG</strong>. Para salvar, use o botão <strong>Salvar</strong> ou tecle <code>Ctrl + S</code> (ou digite <code>QSAVE</code> no console). O CADClone exporta em formato DXF ASCII puro, compatível com AutoCAD, Revit, SketchUp, máquinas CNC e corte a laser.
+                            Para abrir arquivos, clique no botão <strong>Abrir</strong> na barra rápida superior ou use o atalho <code>Ctrl + O</code>. Você pode carregar plantas em formato <strong>DWG</strong> ou <strong>DXF</strong>. Para salvar, utilize <strong>Salvar DWG</strong> (formato binário nativo Autodesk via WebAssembly com <code>Ctrl + S</code> / <code>QSAVE</code> / <code>DWGSAVE</code>) ou <strong>Salvar DXF</strong> (formato ASCII com <code>DXFSAVE</code>), ambos 100% compatíveis com AutoCAD, Revit, SketchUp, Civil 3D, máquinas CNC e corte a laser.
                         </div>
                         <div data-lang="en">
-                            To open files, click the <strong>Open</strong> button on the top toolbar or press <code>Ctrl + O</code>. You can load drawings in <strong>DXF</strong> or <strong>DWG</strong> format. To save, click <strong>Save</strong>, press <code>Ctrl + S</code>, or type <code>QSAVE</code> in the console. CADClone exports clean ASCII DXF files, 100% compatible with AutoCAD, Revit, SketchUp, CNC routers, and laser cutters.
+                            To open files, click the <strong>Open</strong> button on the top toolbar or press <code>Ctrl + O</code>. You can load drawings in <strong>DWG</strong> or <strong>DXF</strong> format. To save, choose <strong>Save DWG</strong> (native Autodesk binary format via WebAssembly with <code>Ctrl + S</code> / <code>QSAVE</code> / <code>DWGSAVE</code>) or <strong>Save DXF</strong> (ASCII format with <code>DXFSAVE</code>), both 100% compatible with AutoCAD, Revit, SketchUp, Civil 3D, CNC routers, and laser cutters.
                         </div>
                     </div>
                 </div>

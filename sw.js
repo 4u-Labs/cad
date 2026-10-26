@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cadclone-v1.6.2';
+const CACHE_NAME = 'cadclone-v2.0.0-wasm';
 const ASSETS = [
   './',
   './index.php',
@@ -6,6 +6,9 @@ const ASSETS = [
   './termos.php',
   './suporte.php',
   './tutorial.php',
+  './cad_dwg.js',
+  './dwg/cadclone_dwg.js',
+  './dwg/cadclone_dwg_bg.wasm',
   './cad_i18n.js',
   './cad_blocks.js',
   './cad_engine.js',
