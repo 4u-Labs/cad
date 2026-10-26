@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cadclone-v2.0.0-wasm';
+const CACHE_NAME = 'cadclone-v2.1.0-3d';
 const ASSETS = [
   './',
   './index.php',
@@ -6,6 +6,7 @@ const ASSETS = [
   './termos.php',
   './suporte.php',
   './tutorial.php',
+  './cad_3d.js',
   './cad_dwg.js',
   './dwg/cadclone_dwg.js',
   './dwg/cadclone_dwg_bg.wasm',
@@ -32,7 +33,12 @@ const ASSETS = [
   './libs/dxf-parser.min.js',
   './libs/jspdf.umd.min.js',
   './libs/pdf.min.js',
-  './libs/pdf.worker.min.js'
+  './libs/pdf.worker.min.js',
+  './libs/three.min.js',
+  './libs/OrbitControls.js',
+  './libs/STLLoader.js',
+  './libs/STLExporter.js',
+  './libs/three-csg.js'
 ];
 
 self.addEventListener('install', (e) => {

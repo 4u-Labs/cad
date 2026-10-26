@@ -2,11 +2,12 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.1.0-blue.svg?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-active-success.svg?style=for-the-badge)
-![PWA](https://img.shields.io/badge/PWA-offline_ready-10b981.svg?style=for-the-badge)
-![AutoCAD Parity](https://img.shields.io/badge/AutoCAD-command_parity-red.svg?style=for-the-badge)
-![DWG & DXF](https://img.shields.io/badge/format-DWG%20%7C%20DXF%20(WASM)-orange.svg?style=for-the-badge)
+![PWA](https://img.shields.io/badge/PWA-desktop_native_offline-10b981.svg?style=for-the-badge)
+![AutoCAD Parity](https://img.shields.io/badge/AutoCAD-2D%20%7C%203D-red.svg?style=for-the-badge)
+![DWG & DXF](https://img.shields.io/badge/format-DWG%20%7C%20DXF%20%7C%20STL-orange.svg?style=for-the-badge)
+![3D Solids](https://img.shields.io/badge/3D%20Solids-Three.js%20%7C%20CSG-purple.svg?style=for-the-badge)
 ![Rust WASM](https://img.shields.io/badge/Rust-WebAssembly-black.svg?style=for-the-badge&logo=rust)
 ![License](https://img.shields.io/badge/license-Proprietary%20%2F%20Free%20to%20Use-purple.svg?style=for-the-badge)
 [![AlternativeTo](https://img.shields.io/badge/AlternativeTo-CADClone-00a8ff.svg?style=for-the-badge&logo=alternativeto&logoColor=white)](https://alternativeto.net/software/cadclone/about/)
@@ -53,8 +54,10 @@ Projetado para arquitetos, engenheiros civis, projetistas, estudantes e técnico
 | **Blocos ABNT** | Galeria com 14 categorias técnicas, busca instantânea, rotação e escala na inserção (`INSERT` / `I`) |
 | **Calco Técnico** | Anexar PDF (`PDFATTACH`), Anexar Imagem (`IMAGEATTACH`), Calibração Métrica 1:1 (`CALIBRATE`), Barra Flutuante com rotação 90°, zoom e opacidade |
 | **Inspeção Rápida** | Painel de Propriedades (<kbd>Ctrl+1</kbd> / `PROPS`), Alças de manipulação de vértices (Direct Grips) |
+| **Sólidos 3D** | Órbita 3D (`3DORBIT` / `3DO`), Vistas Isométricas/Frontal/Topo (`PLAN`), Primitivas (`BOX`, `CYLINDER`, `SPHERE`), Extrusão 2D para 3D (`EXTRUDE`), Operações Booleanas (`UNION`, `SUBTRACT`, `INTERSECT`) |
+| **Intercâmbio 3D** | Exportação direta para Impressão 3D STL (`STLOUT` / `EXPORTSTL`), Importação de malhas 3D STL (`STLIN` / `IMPORTSTL`) |
 | **Formatos & Arquivos**| Salvar DWG Nativo Autodesk via WebAssembly (`QSAVE` / `DWGSAVE` / <kbd>Ctrl+S</kbd>), Salvar DXF ASCII (`DXFSAVE`), Plotar PDF Vetorial em Escala A4-A1 (`PLOT`), Exportar PNG/JPEG (`EXPORT`), AutoSave contínuo com recuperação (`RECOVER`) |
-| **PWA & Offline** | Instalação com 1 clique como App Desktop/Mobile, suporte total offline via Service Worker |
+| **PWA & Desktop** | Instalação com 1 clique como App Desktop/Mobile, Associação de arquivos nativa no SO para abrir com duplo clique (.dwg, .dxf, .stl), suporte total offline via Service Worker |
 
 ---
 

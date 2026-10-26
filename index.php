@@ -2331,6 +2331,50 @@
             color: #ef4444;
         }
 
+        /* 3D HUD Floating Toolbar */
+        .cad-3d-hud-bar {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 20;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+        }
+        .hud-3d-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f8fafc;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 5px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .hud-3d-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #38bdf8;
+        }
+        .hud-3d-sep {
+            width: 1px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 0 2px;
+        }
+
         /* Drag-and-Drop Overlay */
         .cad-drop-overlay {
             position: absolute;
@@ -2523,6 +2567,7 @@
                 <div class="ribbon-tab active" data-tab="home" data-i18n="tab_home" onclick="cadcloneUI.switchRibbonTab('home')">Início (Home)</div>
                 <div class="ribbon-tab" data-tab="annotate" data-i18n="tab_annotate" onclick="cadcloneUI.switchRibbonTab('annotate')">Anotação</div>
                 <div class="ribbon-tab" data-tab="output" data-i18n="tab_output" onclick="cadcloneUI.switchRibbonTab('output')">Exportar / Prancha</div>
+                <div class="ribbon-tab" data-tab="solid3d" data-i18n="tab_solid3d" onclick="cadcloneUI.switchRibbonTab('solid3d')">Sólidos 3D</div>
             </div>
 
             <div class="ribbon-panels" id="ribbonHomePanel">
@@ -2906,6 +2951,83 @@
                     <div class="panel-title" data-i18n="underlay_bar_title">Calco Técnico</div>
                 </div>
             </div>
+
+            <!-- Ribbon Tab: Sólidos 3D (Solid3D) -->
+            <div class="ribbon-panels" id="ribbonSolid3dPanel" style="display: none;">
+                <!-- 3D Navigation Panel -->
+                <div class="ribbon-panel">
+                    <div class="panel-tools">
+                        <button class="tool-btn-large" id="btnToggle3D" data-i18n-title="tool_3d_orbit_title" title="Alternar entre Planta 2D e Órbita 3D (3DORBIT)" onclick="cadcloneUI.cad3d.toggle()">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(30 12 12)"/></svg>
+                            <span data-i18n="tool_3d_orbit">Órbita 3D</span>
+                        </button>
+                        <div class="panel-tools-col">
+                            <button class="tool-btn-small" data-i18n-title="tool_3d_top_title" title="Vista Superior em Planta (PLAN)" onclick="cadcloneUI.cad3d.setView('top')">
+                                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                <span data-i18n="tool_3d_top">Topo (2D)</span>
+                            </button>
+                            <button class="tool-btn-small" data-i18n-title="tool_3d_iso_title" title="Vista Isométrica 3D (SW)" onclick="cadcloneUI.cad3d.setView('iso')">
+                                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                <span data-i18n="tool_3d_iso">Isométrica</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-title" data-i18n="panel_3d_nav">Navegação 3D</div>
+                </div>
+
+                <!-- 3D Primitives Panel -->
+                <div class="ribbon-panel">
+                    <div class="panel-tools">
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_box_title" title="Criar Sólido 3D em Cubo / Paralelepípedo (BOX)" onclick="cadcloneUI.cad3d.show(); cadcloneUI.cad3d.createBox(10, 10, 5);">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                            <span data-i18n="tool_3d_box">Cubo (Box)</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_cyl_title" title="Criar Sólido Cilíndrico 3D (CYLINDER)" onclick="cadcloneUI.cad3d.show(); cadcloneUI.cad3d.createCylinder(5, 10);">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/></svg>
+                            <span data-i18n="tool_3d_cyl">Cilindro</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_sphere_title" title="Criar Sólido Esférico 3D (SPHERE)" onclick="cadcloneUI.cad3d.show(); cadcloneUI.cad3d.createSphere(5);">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <span data-i18n="tool_3d_sphere">Esfera</span>
+                        </button>
+                    </div>
+                    <div class="panel-title" data-i18n="panel_3d_primitives">Primitivas 3D</div>
+                </div>
+
+                <!-- 3D Operations Panel -->
+                <div class="ribbon-panel">
+                    <div class="panel-tools">
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_extrude_title" title="Extrudar Entidades 2D para Paredes / Sólidos 3D (EXTRUDE)" onclick="cadcloneUI.cad3d.show(); const h = parseFloat(prompt('Altura da extrusão (m):', '2.80')); if(h > 0) cadcloneUI.cad3d.extrude2D(h);">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                            <span data-i18n="tool_3d_extrude">Extrusão</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_union_title" title="Unir Sólidos 3D (UNION)" onclick="cadcloneUI.cad3d.applyBooleanOperation('union')">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="9" cy="12" r="7"/><circle cx="15" cy="12" r="7"/></svg>
+                            <span data-i18n="tool_3d_union">União</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_subtract_title" title="Subtrair Sólidos 3D / Criar Vãos e Furos (SUBTRACT)" onclick="cadcloneUI.cad3d.applyBooleanOperation('subtract')">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+                            <span data-i18n="tool_3d_subtract">Subtração</span>
+                        </button>
+                    </div>
+                    <div class="panel-title" data-i18n="panel_3d_operations">Operações com Sólidos</div>
+                </div>
+
+                <!-- 3D Print / STL Panel -->
+                <div class="ribbon-panel">
+                    <div class="panel-tools">
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_export_stl_title" title="Exportar Sólidos 3D para Impressão 3D (.STL) (STLOUT)" onclick="cadcloneUI.cad3d.exportSTL()">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            <span data-i18n="tool_3d_export_stl">Exportar STL</span>
+                        </button>
+                        <button class="tool-btn-large" data-i18n-title="tool_3d_import_stl_title" title="Importar Arquivo de Malha 3D (.STL) (STLIN)" onclick="document.getElementById('cadStlInput').click()">
+                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span data-i18n="tool_3d_import_stl">Importar STL</span>
+                        </button>
+                    </div>
+                    <div class="panel-title" data-i18n="panel_3d_stl">Impressão 3D & STL</div>
+                </div>
+            </div>
         </div>
 
         <!-- 2.5 AutoCAD Drawing File Tabs Bar -->
@@ -2933,6 +3055,48 @@
         <!-- 3. Viewport (Model Space Canvas) -->
         <main class="cad-viewport-container" id="viewportContainer">
             <canvas id="cadCanvas"></canvas>
+
+            <!-- 3D Viewport Overlay & Canvas -->
+            <div id="cad3dContainer" style="display: none; position: absolute; top:0; left:0; width:100%; height:100%; z-index: 5;">
+                <canvas id="cad3dCanvas" style="width:100%; height:100%; display:block;"></canvas>
+                <!-- 3D Floating HUD Toolbar -->
+                <div id="cad3dHudBar" class="cad-3d-hud-bar" style="display: none;">
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.hide()" title="Voltar para Planta 2D (PLAN / 2D)">
+                        <span>🔙</span> <span>Planta 2D</span>
+                    </button>
+                    <div class="hud-3d-sep"></div>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.setView('top')" title="Vista Superior (Top)">
+                        <span>📐</span> <span>Topo</span>
+                    </button>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.setView('iso')" title="Vista Isométrica (SW)">
+                        <span>🏢</span> <span>Isométrica</span>
+                    </button>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.setView('front')" title="Vista Frontal">
+                        <span>🔲</span> <span>Frontal</span>
+                    </button>
+                    <div class="hud-3d-sep"></div>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.createBox(10, 10, 5)" title="Criar Cubo 3D (BOX)">
+                        <span>📦</span> <span>Box</span>
+                    </button>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.createCylinder(5, 10)" title="Criar Cilindro 3D (CYLINDER)">
+                        <span>🛢️</span> <span>Cilindro</span>
+                    </button>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.extrude2D(2.8)" title="Extrudar Linhas 2D para Paredes 3D (EXTRUDE)">
+                        <span>⬆️</span> <span>Extrusão</span>
+                    </button>
+                    <div class="hud-3d-sep"></div>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.applyBooleanOperation('subtract')" title="Subtração Booleana / Vãos e Furos (SUBTRACT)">
+                        <span>✂️</span> <span>Subtrair</span>
+                    </button>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.applyBooleanOperation('union')" title="União Booleana (UNION)">
+                        <span>🧲</span> <span>Unir</span>
+                    </button>
+                    <div class="hud-3d-sep"></div>
+                    <button type="button" class="hud-3d-btn" onclick="cadcloneUI.cad3d.exportSTL()" title="Exportar STL para Impressão 3D (STLOUT)">
+                        <span>🖨️</span> <span>Exportar STL</span>
+                    </button>
+                </div>
+            </div>
 
             <!-- Underlay Floating HUD Bar -->
             <div id="cadUnderlayBar" class="cad-underlay-bar" style="display: none;">
@@ -3119,11 +3283,13 @@
         </footer>
     </div>
 
-    <!-- Hidden File Input for DWG/DXF -->
-    <input type="file" id="cadFileInput" accept=".dxf,.dwg" onchange="cadcloneUI.handleFileSelected(this.files[0]); this.value = '';">
+    <!-- Hidden File Input for DWG/DXF/STL -->
+    <input type="file" id="cadFileInput" accept=".dxf,.dwg,.stl" onchange="cadcloneUI.handleFileSelected(this.files[0]); this.value = '';">
     <!-- Hidden File Inputs for Underlay PDF and Images -->
     <input type="file" id="cadPdfInput" accept=".pdf">
     <input type="file" id="cadImageInput" accept="image/png,image/jpeg,image/webp,image/bmp">
+    <!-- Hidden File Input for 3D STL Mesh -->
+    <input type="file" id="cadStlInput" accept=".stl" style="display:none;" onchange="if(this.files[0] && cadcloneUI.cad3d) { cadcloneUI.cad3d.importSTL(this.files[0]); this.value = ''; }">
 
     <!-- Modal: Layer Properties Manager (LA) -->
     <div class="modal-overlay" id="layerModal">
@@ -3713,15 +3879,21 @@
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'libs/pdf.worker.min.js';
         }
     </script>
-    <script src="cad_dwg.js?v=2.0.0"></script>
-    <script src="cad_i18n.js?v=2.0.0"></script>
-    <script src="dxf_io.js?v=2.0.0"></script>
-    <script src="osnap.js?v=2.0.0"></script>
-    <script src="cad_blocks.js?v=2.0.0"></script>
-    <script src="cad_engine.js?v=2.0.0"></script>
-    <script src="command_system.js?v=2.0.0"></script>
-    <script src="cad_underlay.js?v=2.0.0"></script>
-    <script src="pdf_export.js?v=2.0.0"></script>
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="libs/STLLoader.js"></script>
+    <script src="libs/STLExporter.js"></script>
+    <script src="libs/three-csg.js"></script>
+    <script src="cad_3d.js?v=2.1.0"></script>
+    <script src="cad_dwg.js?v=2.1.0"></script>
+    <script src="cad_i18n.js?v=2.1.0"></script>
+    <script src="dxf_io.js?v=2.1.0"></script>
+    <script src="osnap.js?v=2.1.0"></script>
+    <script src="cad_blocks.js?v=2.1.0"></script>
+    <script src="cad_engine.js?v=2.1.0"></script>
+    <script src="command_system.js?v=2.1.0"></script>
+    <script src="cad_underlay.js?v=2.1.0"></script>
+    <script src="pdf_export.js?v=2.1.0"></script>
 
     <!-- Main CAD UI Controller -->
     <script>
@@ -3744,6 +3916,17 @@
 
                 this.underlayManager = new CADUnderlayManager(this.engine, this);
                 window.cadUnderlayManager = this.underlayManager;
+
+                // 3D Solids, Viewport & STL Engine
+                if (typeof Cad3DManager !== 'undefined') {
+                    this.cad3d = new Cad3DManager();
+                    const container3d = document.getElementById('cad3dContainer');
+                    const canvas3d = document.getElementById('cad3dCanvas');
+                    if (container3d && canvas3d) {
+                        this.cad3d.init(container3d, canvas3d, this.engine, this);
+                        window.cad3d = this.cad3d;
+                    }
+                }
 
                 this.documents = [];
                 this.activeDocId = null;
@@ -5478,9 +5661,11 @@
                 const home = document.getElementById('ribbonHomePanel');
                 const annotate = document.getElementById('ribbonAnnotatePanel');
                 const output = document.getElementById('ribbonOutputPanel');
+                const solid3d = document.getElementById('ribbonSolid3dPanel');
                 if (home) home.style.display = (tabName === 'home') ? 'flex' : 'none';
                 if (annotate) annotate.style.display = (tabName === 'annotate') ? 'flex' : 'none';
                 if (output) output.style.display = (tabName === 'output') ? 'flex' : 'none';
+                if (solid3d) solid3d.style.display = (tabName === 'solid3d') ? 'flex' : 'none';
                 this.updateRibbonScrollNav();
             }
 
@@ -5841,7 +6026,11 @@
                 const name = file.name.toLowerCase();
                 this.cmdSystem.logHistory(`Abrindo arquivo: ${file.name}...`);
 
-                if (name.endsWith('.pdf')) {
+                if (name.endsWith('.stl')) {
+                    if (this.cad3d) {
+                        this.cad3d.importSTL(file);
+                    }
+                } else if (name.endsWith('.pdf')) {
                     if (this.underlayManager) this.underlayManager.loadPdfFile(file);
                 } else if (/\.(png|jpe?g|webp|bmp|svg)$/i.test(name)) {
                     if (this.underlayManager) this.underlayManager.loadImageFile(file);
@@ -6452,10 +6641,27 @@
             }
         }
 
+        // PWA Launch Queue (File Associations: Double Click .dwg, .dxf, .stl in Windows/Linux/macOS)
+        if ('launchQueue' in window) {
+            window.launchQueue.setConsumer(async (launchParams) => {
+                if (!launchParams.files || !launchParams.files.length) return;
+                for (const fileHandle of launchParams.files) {
+                    try {
+                        const file = await fileHandle.getFile();
+                        if (window.cadcloneUI) {
+                            window.cadcloneUI.handleFileSelected(file);
+                        }
+                    } catch (err) {
+                        console.warn('PWA LaunchQueue open failed:', err);
+                    }
+                }
+            });
+        }
+
         // PWA Service Worker Registration & Cache Auto-Update
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js?v=2.0.0').then(reg => {
+                navigator.serviceWorker.register('sw.js?v=2.1.0').then(reg => {
                     reg.update();
                 }).catch(err => {
                     console.warn('SW registration failed:', err);

@@ -1,7 +1,7 @@
 {
-  "name": "CADClone — AutoCAD 2D Web para Engenharia Civil",
+  "name": "CADClone — CAD 2D & Sólidos 3D para Engenharia e Arquitetura",
   "short_name": "CADClone",
-  "description": "Plataforma profissional de CAD 2D no navegador com comandos e atalhos idênticos ao AutoCAD clássico.",
+  "description": "Software profissional de CAD 2D, Modelagem de Sólidos 3D e STL no navegador com comandos e atalhos idênticos ao AutoCAD.",
   "start_url": "./index.php",
   "display": "standalone",
   "background_color": "#1e1e1e",
@@ -30,6 +30,40 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "./index.php",
+      "name": "Desenhos CAD e Modelos 3D",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ],
+      "accept": {
+        "application/acad": [".dwg"],
+        "application/dxf": [".dxf"],
+        "model/stl": [".stl"]
+      }
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Novo Desenho 2D",
+      "short_name": "Novo 2D",
+      "description": "Criar novo projeto técnico em branco",
+      "url": "./index.php?action=new",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Ambiente 3D / STL",
+      "short_name": "Órbita 3D",
+      "description": "Abrir visualizador e modelador de sólidos 3D",
+      "url": "./index.php?view=3d",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

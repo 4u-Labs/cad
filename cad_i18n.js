@@ -40,6 +40,7 @@ const CAD_I18N = {
         tab_home: 'Início (Home)',
         tab_annotate: 'Anotação',
         tab_output: 'Exportar / Prancha',
+        tab_solid3d: 'Sólidos 3D',
 
         // Ribbon Panels - Titles
         panel_draw: 'Desenhar',
@@ -55,6 +56,10 @@ const CAD_I18N = {
         panel_plot: 'Prancha & Impressão',
         panel_cad_files: 'Arquivos CAD',
         panel_images: 'Imagens',
+        panel_3d_nav: 'Navegação 3D',
+        panel_3d_primitives: 'Primitivas 3D',
+        panel_3d_operations: 'Operações com Sólidos',
+        panel_3d_stl: 'Impressão 3D & STL',
 
         // Draw Tools
         tool_line: 'Linha (L)',
@@ -136,6 +141,32 @@ const CAD_I18N = {
         tool_export_jpg: 'Imagem JPG',
         tool_export_jpg_title: 'Exportar Imagem JPEG',
         export_modal_title: 'Exportar Imagem do Projeto (Alta Resolução)',
+
+        // 3D Solids & Viewport Tools
+        tool_3d_orbit: 'Órbita 3D',
+        tool_3d_orbit_title: 'Alternar entre Planta 2D e Órbita 3D (3DORBIT)',
+        tool_3d_top: 'Topo (2D)',
+        tool_3d_top_title: 'Vista Superior em Planta (PLAN)',
+        tool_3d_iso: 'Isométrica',
+        tool_3d_iso_title: 'Vista Isométrica 3D (SW)',
+        tool_3d_front: 'Frontal',
+        tool_3d_front_title: 'Vista Frontal 3D',
+        tool_3d_box: 'Cubo (Box)',
+        tool_3d_box_title: 'Criar Sólido 3D em Cubo / Paralelepípedo (BOX)',
+        tool_3d_cyl: 'Cilindro',
+        tool_3d_cyl_title: 'Criar Sólido Cilíndrico 3D (CYLINDER)',
+        tool_3d_sphere: 'Esfera',
+        tool_3d_sphere_title: 'Criar Sólido Esférico 3D (SPHERE)',
+        tool_3d_extrude: 'Extrusão',
+        tool_3d_extrude_title: 'Extrudar Entidades 2D para Paredes / Sólidos 3D (EXTRUDE)',
+        tool_3d_union: 'União',
+        tool_3d_union_title: 'Unir Sólidos 3D (UNION)',
+        tool_3d_subtract: 'Subtração',
+        tool_3d_subtract_title: 'Subtrair Sólidos 3D / Criar Vãos e Furos (SUBTRACT)',
+        tool_3d_export_stl: 'Exportar STL',
+        tool_3d_export_stl_title: 'Exportar Sólidos 3D para Impressão 3D (.STL) (STLOUT)',
+        tool_3d_import_stl: 'Importar STL',
+        tool_3d_import_stl_title: 'Importar Arquivo de Malha 3D (.STL) (STLIN)',
 
         // Dynamic Input HUD
         dyn_dist_ph: 'Distância',
@@ -454,6 +485,7 @@ const CAD_I18N = {
         tab_home: 'Home',
         tab_annotate: 'Annotate',
         tab_output: 'Export / Output',
+        tab_solid3d: '3D Solids',
 
         // Ribbon Panels - Titles
         panel_draw: 'Draw',
@@ -469,6 +501,10 @@ const CAD_I18N = {
         panel_plot: 'Plot & Sheet',
         panel_cad_files: 'CAD Files',
         panel_images: 'Images',
+        panel_3d_nav: '3D Navigation',
+        panel_3d_primitives: '3D Primitives',
+        panel_3d_operations: 'Solid Operations',
+        panel_3d_stl: '3D Print & STL',
 
         // Draw Tools
         tool_line: 'Line (L)',
@@ -550,6 +586,32 @@ const CAD_I18N = {
         tool_export_jpg: 'JPG Image',
         tool_export_jpg_title: 'Export JPEG Image',
         export_modal_title: 'Export Project Image (High Resolution)',
+
+        // 3D Solids & Viewport Tools
+        tool_3d_orbit: '3D Orbit',
+        tool_3d_orbit_title: 'Toggle 2D Plan and 3D Orbit Viewport (3DORBIT)',
+        tool_3d_top: 'Top (2D)',
+        tool_3d_top_title: 'Top 2D Plan View (PLAN)',
+        tool_3d_iso: 'Isometric',
+        tool_3d_iso_title: '3D Isometric View (SW)',
+        tool_3d_front: 'Front',
+        tool_3d_front_title: '3D Front View',
+        tool_3d_box: 'Box Solid',
+        tool_3d_box_title: 'Create 3D Solid Box Primitive (BOX)',
+        tool_3d_cyl: 'Cylinder',
+        tool_3d_cyl_title: 'Create 3D Solid Cylinder Primitive (CYLINDER)',
+        tool_3d_sphere: 'Sphere',
+        tool_3d_sphere_title: 'Create 3D Solid Sphere Primitive (SPHERE)',
+        tool_3d_extrude: 'Extrude',
+        tool_3d_extrude_title: 'Extrude 2D Shapes to 3D Walls / Solids (EXTRUDE)',
+        tool_3d_union: 'Union',
+        tool_3d_union_title: 'Union 3D Solids (UNION)',
+        tool_3d_subtract: 'Subtract',
+        tool_3d_subtract_title: 'Subtract 3D Solids / Cut Holes (SUBTRACT)',
+        tool_3d_export_stl: 'Export STL',
+        tool_3d_export_stl_title: 'Export 3D Solids to STL for 3D Printing (STLOUT)',
+        tool_3d_import_stl: 'Import STL',
+        tool_3d_import_stl_title: 'Import 3D Mesh Model (.STL) (STLIN)',
 
         // Dynamic Input HUD
         dyn_dist_ph: 'Distance',

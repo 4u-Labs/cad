@@ -90,6 +90,32 @@ class CommandSystem {
             'SAVEDWG': 'DWGSAVE',
             'DXFSAVE': 'DXFSAVE',
             'SAVEDXF': 'DXFSAVE',
+            '3D': '3DORBIT',
+            '3DO': '3DORBIT',
+            '3DORBIT': '3DORBIT',
+            'ORBIT': '3DORBIT',
+            'PLAN': 'PLAN',
+            '2D': 'PLAN',
+            'EXTRUDE': 'EXTRUDE',
+            'EXT': 'EXTRUDE',
+            'BOX': 'BOX',
+            'CUBO': 'BOX',
+            'CYLINDER': 'CYLINDER',
+            'CYL': 'CYLINDER',
+            'CILINDRO': 'CYLINDER',
+            'SPHERE': 'SPHERE',
+            'ESFERA': 'SPHERE',
+            'UNION': 'UNION',
+            'UNI': 'UNION',
+            'UNIAO': 'UNION',
+            'SUBTRACT': 'SUBTRACT',
+            'SUB': 'SUBTRACT',
+            'SUBTRACAO': 'SUBTRACT',
+            'INTERSECT': 'INTERSECT',
+            'STLOUT': 'STLOUT',
+            'EXPORTSTL': 'STLOUT',
+            'STLIN': 'STLIN',
+            'IMPORTSTL': 'STLIN',
             'AUTOSAVE': 'AUTOSAVE',
             'RECOVER': 'RECOVER',
             'DRAWINGRECOVERY': 'RECOVER',
@@ -198,7 +224,18 @@ class CommandSystem {
             { alias: 'D', name: 'DIMSTYLE', desc: 'Abre Paleta de Propriedades e Estilo da Cota (DIMSCALE / DIMTXT)', descEn: 'Opens Properties panel and Dimension Style' },
             { alias: 'I', name: 'INSERT', desc: 'Insere blocos de esquadrias, sanitários e símbolos ABNT', descEn: 'Inserts architectural and engineering blocks' },
             { alias: 'LTS', name: 'LTSCALE', desc: 'Ajusta o fator de escala global dos tipos de linha (tracejado/centro)', descEn: 'Sets global linetype scale factor' },
-            { alias: 'LT', name: 'LINETYPE', desc: 'Gerencia e lista os tipos de linha técnicos ABNT', descEn: 'Loads, sets, and modifies linetypes' }
+            { alias: 'LT', name: 'LINETYPE', desc: 'Gerencia e lista os tipos de linha técnicos ABNT', descEn: 'Loads, sets, and modifies linetypes' },
+            { alias: '3DORBIT', name: '3DORBIT', desc: 'Ativa órbita 3D interativa para rotação e visualização espacial (3DO / ORBIT)', descEn: 'Activates interactive 3D Orbit viewport (3DO / ORBIT)' },
+            { alias: 'PLAN', name: 'PLAN', desc: 'Retorna a câmera para a vista superior em planta 2D (Top View)', descEn: 'Returns camera to standard top 2D plan view' },
+            { alias: 'EXTRUDE', name: 'EXTRUDE', desc: 'Extruda entidades e paredes 2D para sólidos tridimensionais (EXT)', descEn: 'Extrudes 2D shapes and walls into 3D solids (EXT)' },
+            { alias: 'BOX', name: 'BOX', desc: 'Cria um sólido geométrico em forma de cubo / paralelepípedo 3D', descEn: 'Creates a 3D solid box primitive' },
+            { alias: 'CYLINDER', name: 'CYLINDER', desc: 'Cria um sólido geométrico cilíndrico 3D (CYL)', descEn: 'Creates a 3D solid cylinder primitive (CYL)' },
+            { alias: 'SPHERE', name: 'SPHERE', desc: 'Cria uma esfera sólida tridimensional 3D', descEn: 'Creates a 3D solid sphere primitive' },
+            { alias: 'UNION', name: 'UNION', desc: 'Une dois ou mais sólidos 3D em um único objeto composto (UNI)', descEn: 'Combines selected 3D solids by union' },
+            { alias: 'SUBTRACT', name: 'SUBTRACT', desc: 'Subtrai um sólido 3D de outro (cria furos, aberturas e rebaixos) (SUB)', descEn: 'Subtracts one 3D solid from another' },
+            { alias: 'INTERSECT', name: 'INTERSECT', desc: 'Cria um sólido 3D a partir da intersecção de dois sólidos', descEn: 'Creates 3D solid from intersection of volumes' },
+            { alias: 'STLOUT', name: 'STLOUT', desc: 'Exporta os sólidos 3D da cena em arquivo STL para impressão 3D', descEn: 'Exports 3D solids to STL for 3D printing' },
+            { alias: 'STLIN', name: 'STLIN', desc: 'Importa modelos tridimensionais em formato STL (malha 3D)', descEn: 'Imports 3D models in STL mesh format' }
         ];
 
         // Command definitions with multi-step workflows
@@ -1812,6 +1849,122 @@ class CommandSystem {
                     if (window.cadcloneUI && window.cadcloneUI.saveDXF) {
                         window.cadcloneUI.saveDXF();
                     }
+                    this.cancel();
+                }
+            },
+
+            '3DORBIT': {
+                name: '3DORBIT',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.show();
+                    }
+                    this.cancel();
+                }
+            },
+
+            'PLAN': {
+                name: 'PLAN',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.hide();
+                    }
+                    this.cancel();
+                }
+            },
+
+            'EXTRUDE': {
+                name: 'EXTRUDE',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        if (!window.cadcloneUI.cad3d.active) window.cadcloneUI.cad3d.show();
+                        const h = parseFloat(prompt(this.isEnglish ? 'Enter extrusion height (m):' : 'Digite a altura da extrusão (m):', '2.80'));
+                        if (!isNaN(h) && h > 0) {
+                            window.cadcloneUI.cad3d.extrude2D(h);
+                        }
+                    }
+                    this.cancel();
+                }
+            },
+
+            'BOX': {
+                name: 'BOX',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        if (!window.cadcloneUI.cad3d.active) window.cadcloneUI.cad3d.show();
+                        window.cadcloneUI.cad3d.createBox(10, 10, 5);
+                    }
+                    this.cancel();
+                }
+            },
+
+            'CYLINDER': {
+                name: 'CYLINDER',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        if (!window.cadcloneUI.cad3d.active) window.cadcloneUI.cad3d.show();
+                        window.cadcloneUI.cad3d.createCylinder(5, 10);
+                    }
+                    this.cancel();
+                }
+            },
+
+            'SPHERE': {
+                name: 'SPHERE',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        if (!window.cadcloneUI.cad3d.active) window.cadcloneUI.cad3d.show();
+                        window.cadcloneUI.cad3d.createSphere(5);
+                    }
+                    this.cancel();
+                }
+            },
+
+            'UNION': {
+                name: 'UNION',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.applyBooleanOperation('union');
+                    }
+                    this.cancel();
+                }
+            },
+
+            'SUBTRACT': {
+                name: 'SUBTRACT',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.applyBooleanOperation('subtract');
+                    }
+                    this.cancel();
+                }
+            },
+
+            'INTERSECT': {
+                name: 'INTERSECT',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.applyBooleanOperation('intersect');
+                    }
+                    this.cancel();
+                }
+            },
+
+            'STLOUT': {
+                name: 'STLOUT',
+                start: () => {
+                    if (window.cadcloneUI && window.cadcloneUI.cad3d) {
+                        window.cadcloneUI.cad3d.exportSTL();
+                    }
+                    this.cancel();
+                }
+            },
+
+            'STLIN': {
+                name: 'STLIN',
+                start: () => {
+                    const stlInput = document.getElementById('cadStlInput');
+                    if (stlInput) stlInput.click();
                     this.cancel();
                 }
             },
